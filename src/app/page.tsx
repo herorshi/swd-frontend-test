@@ -1,5 +1,6 @@
 "use client";
 
+import "flag-icons/css/flag-icons.min.css";
 import "sweetalert2/dist/sweetalert2.min.css";
 import {
   Button,
@@ -50,16 +51,16 @@ const TITLE_OPTIONS = [
 
 /** สัญชาติ + รหัสโทร + ธง — ชุดเดียวกันเสมอ (จำนวนเท่ากัน) */
 const NATIONALITY_PHONE = [
-  { value: "Thai", labelEn: "Thai", labelTh: "ไทย", dial: "+66", flag: "🇹🇭" },
+  { value: "Thai", labelEn: "Thai", labelTh: "ไทย", dial: "+66", fiCode: "th" as const },
   {
     value: "American",
     labelEn: "American",
     labelTh: "อเมริกัน",
     dial: "+1",
-    flag: "🇺🇸",
+    fiCode: "us" as const,
   },
-  { value: "British", labelEn: "British", labelTh: "อังกฤษ", dial: "+44", flag: "🇬🇧" },
-  { value: "Japanese", labelEn: "Japanese", labelTh: "ญี่ปุ่น", dial: "+81", flag: "🇯🇵" },
+  { value: "British", labelEn: "British", labelTh: "อังกฤษ", dial: "+44", fiCode: "gb" as const },
+  { value: "Japanese", labelEn: "Japanese", labelTh: "ญี่ปุ่น", dial: "+81", fiCode: "jp" as const },
 ] as const;
 
 const NATIONALITY_LABELS: Record<string, NationalityLabel> = Object.fromEntries(
@@ -69,21 +70,19 @@ const NATIONALITY_LABELS: Record<string, NationalityLabel> = Object.fromEntries(
   ])
 ) as Record<string, NationalityLabel>;
 
-/** ธง + รหัสโทร — ใช้กับ optionRender / labelRender */
+/** ธง (flag-icons) + รหัสโทร — ใช้กับ optionRender / labelRender */
 type PhoneCodeOption = {
   value: string;
-  flag: string;
+  fiCode: string;
   dial: string;
   label: string;
-  optionLabel: string;
 };
 
 const PHONE_CODES: PhoneCodeOption[] = NATIONALITY_PHONE.map((n) => ({
   value: n.dial,
-  flag: n.flag,
+  fiCode: n.fiCode,
   dial: n.dial,
-  label: `${n.flag} ${n.dial} ${n.labelEn}`,
-  optionLabel: `${n.flag} ${n.dial}`,
+  label: `${n.dial} ${n.labelEn}`,
 }));
 
 const CITIZEN_LIMITS = [1, 4, 5, 2, 1] as const;
@@ -629,9 +628,10 @@ export default function Home() {
                         const data = option.data as PhoneCodeOption;
                         return (
                           <span className={styles.phoneOption}>
-                            <span className={styles.phoneFlag} aria-hidden>
-                              {data.flag}
-                            </span>
+                            <span
+                              className={`fi fi-${data.fiCode} ${styles.phoneFiFlag}`}
+                              aria-hidden
+                            />
                             <span>{data.dial}</span>
                           </span>
                         );
@@ -645,9 +645,10 @@ export default function Home() {
                         }
                         return (
                           <span className={styles.phoneOption}>
-                            <span className={styles.phoneFlag} aria-hidden>
-                              {opt.flag}
-                            </span>
+                            <span
+                              className={`fi fi-${opt.fiCode} ${styles.phoneFiFlag}`}
+                              aria-hidden
+                            />
                             <span>{opt.dial}</span>
                           </span>
                         );
