@@ -1,37 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SWD Frontend Test
 
-## Getting Started
+โปรเจกต์นี้เป็นระบบฟอร์มและตารางสำหรับจัดการข้อมูลพนักงาน สร้างด้วย Next.js, TypeScript, Ant Design, Redux Toolkit และ i18n รองรับทั้งภาษาไทยและภาษาอังกฤษ
 
-First, run the development server:
+## คุณสมบัติหลัก
+
+- กรอกข้อมูลพนักงานผ่านฟอร์ม
+- แสดงข้อมูลในตาราง พร้อมแก้ไขและลบรายการได้
+- เปลี่ยนภาษาไทย / อังกฤษได้
+- เก็บข้อมูลลง `localStorage`
+- ข้อมูลสัญชาติรองรับทั้งภาษาไทยและภาษาอังกฤษ
+- มี validation สำหรับเบอร์โทร, Passport No และ Expected Salary
+
+## เทคโนโลยีที่ใช้
+
+- Next.js 14
+- React 18
+- TypeScript
+- Ant Design
+- Redux Toolkit
+- react-i18next
+- SweetAlert2
+- dayjs
+
+## ข้อกำหนดก่อนเริ่ม
+
+- ต้องใช้ **Node.js เวอร์ชัน 20 ขึ้นไป**
+- แนะนำให้ใช้ package manager แค่ตัวเดียวต่อโปรเจกต์
+
+โปรเจกต์นี้มีทั้ง `package-lock.json` และ `yarn.lock`
+ถ้าจะใช้ `npm` ให้ใช้ `npm` ต่อเนื่อง
+ถ้าจะใช้ `yarn` ให้ใช้ `yarn` ต่อเนื่อง และไม่ควรสลับกัน
+
+## ลำดับคำสั่งสำหรับขึ้นโปรเจกต์
+
+### วิธีที่ 1: ใช้ npm
+
+1. clone โปรเจกต์
+
+```bash
+git clone https://github.com/herorshi/-swd-frontend-test-form.git
+```
+
+2. เข้าโฟลเดอร์โปรเจกต์
+
+```bash
+cd -- "-swd-frontend-test-form"
+```
+
+3. ตรวจสอบเวอร์ชัน Node.js
+
+```bash
+node -v
+```
+
+4. ติดตั้ง dependencies
+
+```bash
+npm install
+```
+
+5. รันโปรเจกต์แบบ development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. เปิดเว็บที่
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### วิธีที่ 2: ใช้ yarn
 
-## Learn More
+1. clone โปรเจกต์
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git clone https://github.com/herorshi/-swd-frontend-test-form.git
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. เข้าโฟลเดอร์โปรเจกต์
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd -- "-swd-frontend-test-form"
+```
 
-## Deploy on Vercel
+3. ตรวจสอบเวอร์ชัน Node.js
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+node -v
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# swd-frontend-test
+4. ติดตั้ง dependencies
+
+```bash
+yarn install
+```
+
+5. รันโปรเจกต์แบบ development
+
+```bash
+yarn dev
+```
+
+6. เปิดเว็บที่
+
+```bash
+http://localhost:3000
+```
+
+## คำสั่งที่ใช้บ่อย
+
+รัน development server:
+
+```bash
+npm run dev
+```
+
+build production:
+
+```bash
+npm run build
+```
+
+run production server:
+
+```bash
+npm run start
+```
+
+ตรวจ lint:
+
+```bash
+npm run lint
+```
+
+## โครงสร้างไฟล์สำคัญ
+
+- `src/app/page.tsx` หน้าแบบฟอร์มและตารางหลัก
+- `src/app/page.module.css` style ของหน้า
+- `src/store/` Redux store และ slices
+- `src/store/storage.ts` จัดการ `localStorage`
+- `src/i18n/resources.ts` ข้อความภาษาไทยและอังกฤษ
+- `src/types/employee.ts` type ของข้อมูลพนักงาน
+
+## การทำงานของข้อมูล
+
+- ข้อมูลรายการพนักงานจะถูกเก็บลง `localStorage`
+- เมื่อรีเฟรชหน้า ข้อมูลจะยังอยู่
+- ข้อมูลสัญชาติถูกเก็บทั้ง `en` และ `th` เพื่อให้สลับภาษาแล้วแสดงผลได้ถูกต้อง
+
+## Validation ที่มีในระบบ
+
+- `Mobile Phone` ต้องเป็นตัวเลข 10 หลัก และขึ้นต้นด้วย `0`
+- `Passport No` กรอกได้เฉพาะตัวเลข
+- `Expected Salary` กรอกได้เฉพาะตัวเลข และแสดง comma อัตโนมัติ
+
+## หมายเหตุ
+
+- ถ้าเปลี่ยนภาษา ข้อความในฟอร์มและค่าของสัญชาติในตารางจะเปลี่ยนตามภาษาที่เลือก
+- ค่าที่แสดงในฟอร์มบางส่วนถูกจัด format เพื่อให้กรอกง่ายขึ้น แต่ค่าที่เก็บยังเป็นรูปแบบที่เหมาะกับการใช้งานในระบบ
