@@ -1,165 +1,649 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
+  min-height: 100vh;
+  padding: 28px 36px 56px;
+  background: linear-gradient(
+    90deg,
+    #58a86f 0%,
+    #75c96f 28%,
+    #e8a83a 72%,
+    #f7c948 100%
+  );
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
 }
 
-.main {
+.appTitle {
+  margin: 0;
+  font-size: clamp(1.65rem, 3.5vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #111;
+}
+
+.headerRight {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  align-items: flex-end;
+  gap: 10px;
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+.langSelect {
+  min-width: 88px;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+.langSelect :global(.ant-select-selector) {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
+.langSelect:global(.ant-select-focused:not(.ant-select-disabled))
+  :global(.ant-select-selector),
+.langSelect:global(.ant-select-open) :global(.ant-select-selector),
+.langSelect:hover :global(.ant-select-selector) {
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.ctas {
+/* สไตล์เดียวกับ RESET / SUBMIT / DELETE */
+.homeBtn {
+  border: none !important;
+  box-shadow: none !important;
+  background: #fff !important;
+  color: #111 !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  letter-spacing: normal;
+  border-radius: 8px !important;
+  min-width: 84px;
+  height: 32px !important;
+  padding: 0 12px !important;
+  line-height: 1.2 !important;
+}
+
+.homeBtn:hover,
+.homeBtn:focus,
+.homeBtn:focus-visible {
+  background: #fff !important;
+  color: #111 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.homeBtn:global(.ant-btn) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.homeBtn:global(.ant-btn)::after {
+  display: none;
+}
+
+/* ฟอร์มกึ่งกลาง — กรอบกว้างตามเนื้อหา (input กว้างขึ้นกรอบตาม) ไม่เกินความกว้างจอ */
+.formOuter {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 14px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.formCard {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  width: max-content;
+  max-width: 100%;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  padding: 24px 22px 22px;
+  background: transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.formGrid {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
 }
 
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  cursor: pointer;
+/* แถว 1: Title แคบตามเนื้อหา — Firstname / Lastname คอลัมน์เท่ากัน ช่องยาวเท่ากัน */
+.formRowTop {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px 20px;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 18px;
+  min-width: 0;
+}
+
+.formRowTop .inlineField:first-child {
+  justify-self: start;
+  width: max-content;
+  max-width: 100%;
+  gap: 4px 6px;
+}
+
+/* Title: label ชิด dropdown เหมือน Birthday (ไม่ใช้คอลัมน์ compact 76px) */
+.formRowTop .inlineField:first-child .fieldLabelCompact {
+  flex: 0 0 auto;
+  padding-right: 4px;
+}
+
+.formRowTop .inlineField:nth-child(2) .fieldControl,
+.formRowTop .inlineField:nth-child(3) .fieldControl {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* แถว 2: วันเกิด + สัญชาติ — flex แถวเดียวซ้าย (ไม่ใช้ grid 50/50 ที่ดันสัญชาติไปขวา) */
+.formRowPair {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  width: 100%;
+  margin-bottom: 18px;
+  min-width: 0;
+}
+
+.formRowTop .inlineField,
+.formRowPair .inlineField {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.formRowPair .fieldLabel {
+  flex: 0 0 auto;
+  padding-right: 4px;
+}
+
+.formRowPair .inlineField {
+  gap: 4px 6px;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+
+/* Citizen / Mobile / Passport / Expected: label ชิด control + กลุ่มชิดซ้าย (ไม่ใช้คอลัมน์ label 128px) */
+.inlineFieldLabelTight {
+  gap: 4px 6px;
+  width: max-content;
+  max-width: 100%;
+}
+
+.inlineFieldLabelTight .fieldLabel {
+  flex: 0 0 auto;
+  padding-right: 4px;
+}
+
+.inlineFieldLabelTight .fieldControl {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* แต่ละแถว: label ชิด input — gap เล็ก */
+.inlineField {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-bottom: 16px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.fieldLabel {
+  flex: 0 0 128px;
+  margin: 0;
+  padding: 0 2px 0 0;
+  text-align: left;
+  font-weight: 400;
+  color: #111;
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.fieldLabelCompact {
+  flex: 0 0 76px;
+  min-width: 0;
+}
+
+/* ค่าเริ่มต้น: input กว้างเท่าที่จำเป็น ไม่ดึงยาวเต็มแถว */
+.fieldControl {
+  flex: 0 1 auto;
+  min-width: 0;
+  width: auto;
+  max-width: 100%;
+}
+
+.formCard :global(.ant-input),
+.formCard :global(.ant-input-affix-wrapper),
+.formCard :global(.ant-select .ant-select-selector),
+.formCard :global(.ant-picker) {
+  border-radius: 8px !important;
+  border: 1px solid #c5c5c5 !important;
+  background: #fff !important;
+}
+
+.required {
+  color: #d32f2f;
+  margin-right: 2px;
+}
+
+.citizenRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  column-gap: 0;
+}
+
+/* ช่องว่างระหว่าง input — ขีดอยู่กึ่งกลาง ไม่ชิดขอบ input */
+.citizenGap {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
+  flex: 0 0 auto;
+  min-width: 32px;
+  padding: 0 4px;
+  box-sizing: border-box;
 }
 
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
+.citizenDash {
+  font-weight: 400;
+  color: #333;
+  user-select: none;
+  text-align: center;
+  line-height: 1;
 }
 
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
+/* Citizen ID: ตัวเลขกลางช่อง + caret กลางแนวตั้ง (antd ใส่ padding แนวตั้งทำให้ caret เพี้ยน) */
+.citizenInput :global(.ant-input-affix-wrapper) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
+  min-height: 32px;
+  box-sizing: border-box;
 }
 
-.footer {
-  grid-row-start: 3;
+.citizenInput :global(.ant-input) {
+  text-align: center !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.citizenInput {
+  border-radius: 8px !important;
+}
+
+.radioRow {
   display: flex;
-  gap: 24px;
-}
-
-.footer a {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 8px 16px;
 }
 
-.footer img {
+.radioRow :global(.ant-radio-wrapper) {
+  font-weight: 400;
+}
+
+.inlineFieldLabelTight .radioRow {
+  width: auto;
+  max-width: 100%;
+}
+
+.inlineFieldLabelTight .fieldControl :global(.ant-radio-group) {
+  width: auto;
+}
+
+.phoneRow {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  max-width: 100%;
+}
+
+.phoneDash {
+  font-weight: 400;
+  color: #333;
   flex-shrink: 0;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
+.phoneCode {
+  flex: 0 0 auto;
+  width: 158px;
+  max-width: 46vw;
 }
 
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
+.phoneOption {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.phoneFlag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15em;
+  line-height: 1;
+  min-width: 1.35em;
+}
+
+.phoneCode :global(.ant-select-selector) {
+  padding-inline: 8px 28px !important;
+}
+
+.phoneCode :global(.ant-select-item-option-content) {
+  display: flex;
+  align-items: center;
+}
+
+.phoneNumber {
+  flex: 0 1 auto;
+  width: 200px;
+  max-width: min(280px, 100%);
+  min-width: 120px;
+}
+
+/* แถวปุ่ม RESET / SUBMIT — ใต้ Expected Salary ชิดซ้ายสุด */
+.formActionsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px 12px;
+  width: 100%;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+.formActionsRow .formActions {
+  flex: 0 1 auto;
+  margin-left: 0;
+  justify-content: flex-start;
+}
+
+/* Passport + Expected Salary — พื้นที่ input กว้างเท่ากันทุกพิกเซล ไม่ให้ flex หด input */
+.inlineFieldSalaryPassport .fieldControl {
+  flex: 0 0 auto;
+  width: min(100%, 400px);
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Passport — กว้างกว่า Expected Salary เล็กน้อย */
+.inlineFieldPassportWide .fieldControl {
+  width: min(100%, 432px);
+}
+
+.inlineFieldSalaryPassport .salaryInput,
+.inlineFieldSalaryPassport .passportInput {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.formCard .inlineFieldSalaryPassport :global(.ant-input) {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  border: none !important;
+  box-shadow: none !important;
+  background: #fff !important;
+  color: #111 !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  letter-spacing: normal;
+  border-radius: 8px !important;
+  min-width: 84px;
+  height: 32px !important;
+  padding: 0 12px !important;
+  line-height: 1.2 !important;
+}
+
+.actionBtn:hover,
+.actionBtn:focus,
+.actionBtn:focus-visible {
+  background: #fff !important;
+  color: #111 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.actionBtn:global(.ant-btn) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.actionBtn:global(.ant-btn)::after {
+  display: none;
+}
+
+/* แถบเหนือตาราง: เลือก/ลบ ซ้าย — pagination ขวา */
+.tableToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 22px 0 14px;
+  width: 100%;
+}
+
+.bulkBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.tableToolbarRight {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.tableToolbarRight :global(.ant-pagination) {
+  margin: 0 !important;
+}
+
+/* สไตล์เดียวกับ RESET / SUBMIT */
+.bulkDeleteBtn {
+  border: none !important;
+  box-shadow: none !important;
+  background: #fff !important;
+  color: #111 !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  letter-spacing: normal;
+  border-radius: 8px !important;
+  min-width: 84px;
+  height: 32px !important;
+  padding: 0 12px !important;
+  line-height: 1.2 !important;
+}
+
+.bulkDeleteBtn:hover,
+.bulkDeleteBtn:focus,
+.bulkDeleteBtn:focus-visible {
+  background: #fff !important;
+  color: #111 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.bulkDeleteBtn:global(.ant-btn) {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.bulkDeleteBtn:global(.ant-btn)::after {
+  display: none;
+}
+
+.selectAllLabel {
+  font-weight: 400;
+  color: #111;
+}
+
+/* ตารางเต็มความกว้างพื้นที่เนื้อหา */
+.tableOuter {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.tableCard {
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px 16px 18px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.tableCard :global(.ant-table) {
+  font-size: 14px;
+}
+
+.tableCard :global(.ant-table-thead > tr > th) {
+  font-weight: 600;
+  background: #fafafa !important;
+}
+
+.tableCard :global(.ant-table-container) {
+  border-radius: 10px;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  padding: 0 6px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.linkBtn:hover {
+  color: #000;
+}
+
+.manageCell {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .formRowTop {
+    grid-template-columns: 1fr;
   }
 
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
+  .formRowPair {
     flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
   }
 
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
+  .formRowPair .inlineField {
+    width: 100%;
   }
 
-  a.secondary {
-    min-width: auto;
+  .formRowPair .fieldControl :global(.ant-picker),
+  .formRowPair .fieldControl :global(.ant-select) {
+    width: 100% !important;
+    max-width: 100%;
   }
 
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+  .page {
+    padding: 16px;
+  }
+
+  .formCard {
+    padding: 18px 14px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@media (max-width: 640px) {
+  .inlineFieldLabelTight {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .inlineField {
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .fieldLabel,
+  .fieldLabelCompact {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    text-align: left;
+    padding-right: 0;
+    white-space: normal;
+  }
+
+  .formOuter {
+    max-width: 100%;
+  }
+
+  .formActionsRow .formActions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .phoneRow {
+    flex-wrap: wrap;
   }
 }
