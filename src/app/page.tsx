@@ -18,7 +18,7 @@ import type { SorterResult } from "antd/es/table/interface";
 import enUS from "antd/locale/en_US";
 import thTH from "antd/locale/th_TH";
 import dayjs from "dayjs";
-import { Fragment, useCallback, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import {
@@ -179,6 +179,13 @@ export default function Home() {
     return sortedItems.slice(start, start + pageSize);
   }, [sortedItems, page, pageSize]);
 
+  useEffect(() => {
+    const totalPages = Math.max(1, Math.ceil(sortedItems.length / pageSize));
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, pageSize, sortedItems.length]);
+
   const pageIds = useMemo(() => pagedItems.map((r) => r.id), [pagedItems]);
   const allPageSelected =
     pageIds.length > 0 && pageIds.every((id) => selectedRowKeys.includes(id));
@@ -209,7 +216,7 @@ export default function Home() {
       });
       return null;
     }
-    if (mobilePhone.length !== 10 || !mobilePhone.startsWith("0")) {
+    if (mobilePhone.length !== 10) {
       void Swal.fire({
         icon: "warning",
         title: t("mobileInvalid"),
@@ -678,7 +685,6 @@ export default function Home() {
                       value={form.mobilePhone}
                       onChange={(e) => {
                         const next = digitsOnly(e.target.value).slice(0, 10);
-                        if (next !== "" && !next.startsWith("0")) return;
                         dispatch(setMobilePhone(next));
                       }}
                     />
