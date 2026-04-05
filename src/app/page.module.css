@@ -581,6 +581,76 @@
   align-items: center;
 }
 
+@media (max-width: 1100px) {
+  .formCard {
+    display: block;
+    width: 100%;
+  }
+
+  .formRowTop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .formRowTop .inlineField:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .formRowTop .inlineField:nth-child(2),
+  .formRowTop .inlineField:nth-child(3),
+  .formRowPair .inlineField {
+    width: 100%;
+  }
+
+  .formRowTop .inlineField:nth-child(2) .fieldControl,
+  .formRowTop .inlineField:nth-child(3) .fieldControl,
+  .formRowPair .inlineField .fieldControl {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .formRowTop .inlineField:nth-child(2) :global(.ant-input),
+  .formRowTop .inlineField:nth-child(3) :global(.ant-input),
+  .formRowPair .fieldControl :global(.ant-picker),
+  .formRowPair .fieldControl :global(.ant-select) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .formRowTop {
+    grid-template-columns: 1fr;
+  }
+
+  .inlineFieldLabelTight,
+  .inlineFieldSalaryPassport {
+    width: 100%;
+  }
+
+  .inlineFieldLabelTight .fieldControl,
+  .inlineFieldSalaryPassport .fieldControl {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .phoneRow {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .phoneCode {
+    flex: 0 1 158px;
+    max-width: 100%;
+  }
+
+  .phoneNumber {
+    flex: 1 1 180px;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .formRowTop {
     grid-template-columns: 1fr;
@@ -634,8 +704,42 @@
     white-space: normal;
   }
 
+  .fieldControl {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .formRowTop .inlineField:first-child {
+    width: 100%;
+  }
+
+  .formRowTop .inlineField:first-child .fieldControl {
+    width: 100%;
+  }
+
+  .formRowTop .inlineField:first-child :global(.ant-select) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   .formOuter {
     max-width: 100%;
+  }
+
+  .citizenRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .citizenGap {
+    display: none;
+  }
+
+  .citizenInput {
+    width: 100% !important;
   }
 
   .formActionsRow .formActions {
@@ -644,6 +748,18 @@
   }
 
   .phoneRow {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .phoneDash {
+    display: none;
+  }
+
+  .phoneCode,
+  .phoneNumber {
+    width: 100%;
+    max-width: 100%;
   }
 }
