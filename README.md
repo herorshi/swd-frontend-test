@@ -38,13 +38,13 @@
 1. clone โปรเจกต์
 
 ```bash
-git clone https://github.com/herorshi/-swd-frontend-test-form.git
+git clone https://github.com/herorshi/swd-frontend-test.git
 ```
 
 2. เข้าโฟลเดอร์โปรเจกต์
 
 ```bash
-cd -- "-swd-frontend-test-form"
+cd -- "swd-frontend-test"
 ```
 
 3. ตรวจสอบเวอร์ชัน Node.js
@@ -76,13 +76,13 @@ http://localhost:3000
 1. clone โปรเจกต์
 
 ```bash
-git clone https://github.com/herorshi/-swd-frontend-test-form.git
+git clone https://github.com/herorshi/swd-frontend-test.git
 ```
 
 2. เข้าโฟลเดอร์โปรเจกต์
 
 ```bash
-cd -- "-swd-frontend-test-form"
+cd -- "swd-frontend-test"
 ```
 
 3. ตรวจสอบเวอร์ชัน Node.js
