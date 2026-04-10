@@ -2,7 +2,14 @@ export const resources = {
   en: {
     translation: {
       appTitle: "Form & Table",
+      layoutTitle: "Layout & Style",
       home: "Home",
+      loading: "Loading…",
+      test1: "Test 1",
+      test2: "Test 2",
+      moveShapeLeft: "Move shape left",
+      moveShapeRight: "Move shape right",
+      movePosition: "Move position",
       langEn: "EN",
       langTh: "TH",
       title: "Title",
@@ -44,7 +51,14 @@ export const resources = {
   th: {
     translation: {
       appTitle: "ฟอร์มและตาราง",
+      layoutTitle: "จัดการหน้าเว็บ",
       home: "หน้าแรก",
+      loading: "กำลังโหลด…",
+      test1: "Test 1",
+      test2: "Test 2",
+      moveShapeLeft: "เลื่อนรูปทรงซ้าย",
+      moveShapeRight: "เลื่อนรูปทรงขวา",
+      movePosition: "เลื่อนตำแหน่ง",
       langEn: "EN",
       langTh: "TH",
       title: "คำนำหน้า",

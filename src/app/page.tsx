@@ -18,6 +18,7 @@ import type { SorterResult } from "antd/es/table/interface";
 import enUS from "antd/locale/en_US";
 import thTH from "antd/locale/th_TH";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
@@ -119,6 +120,7 @@ function newId(): string {
 
 export default function Home() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const form = useAppSelector((s) => s.form);
   const items = useAppSelector((s) => s.entries.items);
@@ -438,7 +440,7 @@ export default function Home() {
             />
             <Button
               className={styles.homeBtn}
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => router.push("/home")}
             >
               {t("home")}
             </Button>
