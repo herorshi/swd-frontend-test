@@ -105,14 +105,18 @@
   width: 100%;
 }
 
-.controlsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: auto auto;
-  column-gap: 18px;
-  row-gap: 0;
+.controlsRow {
+  width: 100%;
   max-width: 920px;
   margin: 0 auto;
+}
+
+.controlStack {
+  width: 100%;
+}
+
+.controlStack > :first-child {
+  width: 100%;
 }
 
 .shapeCard {
@@ -137,21 +141,6 @@
 .shapeCard > :global(span) {
   display: block;
   width: 100%;
-}
-
-.controlCard1 {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.controlCardUD {
-  grid-column: 2 / 4;
-  grid-row: 1;
-}
-
-.controlCard4 {
-  grid-column: 4;
-  grid-row: 1;
 }
 
 .shapeCardBody {
@@ -187,29 +176,7 @@
   min-height: 72px;
 }
 
-.pillCell1 {
-  grid-column: 1;
-  grid-row: 2;
-  display: flex;
-  justify-content: center;
-  margin-top: -10px;
-  position: relative;
-  z-index: 1;
-}
-
-.pillCellMid {
-  grid-column: 2 / 4;
-  grid-row: 2;
-  display: flex;
-  justify-content: center;
-  margin-top: -10px;
-  position: relative;
-  z-index: 1;
-}
-
-.pillCell4 {
-  grid-column: 4;
-  grid-row: 2;
+.pillWrap {
   display: flex;
   justify-content: center;
   margin-top: -10px;
@@ -271,34 +238,7 @@
 }
 
 .gridRow {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
   width: 100%;
-}
-
-.gridRowStart > :nth-child(1) {
-  grid-column: 1;
-}
-
-.gridRowStart > :nth-child(2) {
-  grid-column: 2;
-}
-
-.gridRowStart > :nth-child(3) {
-  grid-column: 3;
-}
-
-.gridRowEnd > :nth-child(1) {
-  grid-column: 2;
-}
-
-.gridRowEnd > :nth-child(2) {
-  grid-column: 3;
-}
-
-.gridRowEnd > :nth-child(3) {
-  grid-column: 4;
 }
 
 .gridRowTop {
@@ -451,10 +391,6 @@
     flex-direction: row;
     justify-content: flex-end;
     flex-wrap: wrap;
-  }
-
-  .controlsGrid {
-    column-gap: 10px;
   }
 
   .shapeCardBody {

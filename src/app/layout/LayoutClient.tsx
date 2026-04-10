@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Flex, Select } from "antd";
+import { Button, Col, Flex, Row, Select } from "antd";
 import i18n from "@/i18n/i18n";
 import styles from "./page.module.css";
 
@@ -128,13 +128,19 @@ export default function LayoutClient() {
 
   const row1 = order.slice(0, 3);
   const row2 = order.slice(3, 6);
-
-  const firstShapeRowClass = bottomRowsStaggerSwapped
-    ? styles.gridRowStart
-    : styles.gridRowEnd;
-  const secondShapeRowClass = bottomRowsStaggerSwapped
-    ? styles.gridRowEnd
-    : styles.gridRowStart;
+  const shapeRows = [
+    {
+      ids: row1,
+      keyPrefix: "r1",
+      leadingSpacer: !bottomRowsStaggerSwapped,
+      className: styles.gridRowTop,
+    },
+    {
+      ids: row2,
+      keyPrefix: "r2",
+      leadingSpacer: bottomRowsStaggerSwapped,
+    },
+  ];
 
   return (
     <div className={styles.page}>
@@ -166,115 +172,117 @@ export default function LayoutClient() {
 
       <div className={styles.mainBox}>
         <section className={styles.controlsSection} aria-label="Controls">
-          <div className={styles.controlsGrid}>
-            <Button
-              htmlType="button"
-              block
-              aria-label={t("moveShapeLeft")}
-              className={`${styles.shapeCard} ${styles.controlCard1}`}
-              onClick={() => setOrder((o) => rotateLeft(o))}
-            >
-              <div className={styles.shapeCardBody}>
-                <Triangle dir="left" />
-              </div>
-            </Button>
-            <Button
-              htmlType="button"
-              block
-              aria-label={t("movePosition")}
-              className={`${styles.shapeCard} ${styles.controlCardUD}`}
-              onClick={() => setBottomRowsStaggerSwapped((prev) => !prev)}
-            >
-              <div className={styles.shapeCardBody}>
-                <div className={styles.dualTriangles}>
-                  <Triangle dir="up" inline />
-                  <Triangle dir="down" inline />
+          <Row gutter={[18, 0]} className={styles.controlsRow} align="stretch">
+            <Col span={6}>
+              <Flex vertical align="center" className={styles.controlStack}>
+                <Button
+                  htmlType="button"
+                  block
+                  aria-label={t("moveShapeLeft")}
+                  className={styles.shapeCard}
+                  onClick={() => setOrder((o) => rotateLeft(o))}
+                >
+                  <div className={styles.shapeCardBody}>
+                    <Triangle dir="left" />
+                  </div>
+                </Button>
+                <div className={styles.pillWrap}>
+                  <Button
+                    htmlType="button"
+                    className={styles.pill}
+                    onClick={() => setOrder((o) => rotateLeft(o))}
+                  >
+                    {t("moveShapeLeft")}
+                  </Button>
                 </div>
-              </div>
-            </Button>
-            <Button
-              htmlType="button"
-              block
-              aria-label={t("moveShapeRight")}
-              className={`${styles.shapeCard} ${styles.controlCard4}`}
-              onClick={() => setOrder((o) => rotateRight(o))}
-            >
-              <div className={styles.shapeCardBody}>
-                <Triangle dir="right" />
-              </div>
-            </Button>
+              </Flex>
+            </Col>
 
-            <div className={styles.pillCell1}>
-              <Button
-                htmlType="button"
-                className={styles.pill}
-                onClick={() => setOrder((o) => rotateLeft(o))}
-              >
-                {t("moveShapeLeft")}
-              </Button>
-            </div>
-            <div className={styles.pillCellMid}>
-              <Button
-                htmlType="button"
-                className={styles.pill}
-                onClick={() => setBottomRowsStaggerSwapped((prev) => !prev)}
-              >
-                {t("movePosition")}
-              </Button>
-            </div>
-            <div className={styles.pillCell4}>
-              <Button
-                htmlType="button"
-                className={styles.pill}
-                onClick={() => setOrder((o) => rotateRight(o))}
-              >
-                {t("moveShapeRight")}
-              </Button>
-            </div>
-          </div>
+            <Col span={12}>
+              <Flex vertical align="center" className={styles.controlStack}>
+                <Button
+                  htmlType="button"
+                  block
+                  aria-label={t("movePosition")}
+                  className={styles.shapeCard}
+                  onClick={() => setBottomRowsStaggerSwapped((prev) => !prev)}
+                >
+                  <div className={styles.shapeCardBody}>
+                    <div className={styles.dualTriangles}>
+                      <Triangle dir="up" inline />
+                      <Triangle dir="down" inline />
+                    </div>
+                  </div>
+                </Button>
+                <div className={styles.pillWrap}>
+                  <Button
+                    htmlType="button"
+                    className={styles.pill}
+                    onClick={() => setBottomRowsStaggerSwapped((prev) => !prev)}
+                  >
+                    {t("movePosition")}
+                  </Button>
+                </div>
+              </Flex>
+            </Col>
+
+            <Col span={6}>
+              <Flex vertical align="center" className={styles.controlStack}>
+                <Button
+                  htmlType="button"
+                  block
+                  aria-label={t("moveShapeRight")}
+                  className={styles.shapeCard}
+                  onClick={() => setOrder((o) => rotateRight(o))}
+                >
+                  <div className={styles.shapeCardBody}>
+                    <Triangle dir="right" />
+                  </div>
+                </Button>
+                <div className={styles.pillWrap}>
+                  <Button
+                    htmlType="button"
+                    className={styles.pill}
+                    onClick={() => setOrder((o) => rotateRight(o))}
+                  >
+                    {t("moveShapeRight")}
+                  </Button>
+                </div>
+              </Flex>
+            </Col>
+          </Row>
         </section>
 
         <div className={styles.sectionDivider} />
 
         <div className={styles.gridWrap}>
-          <div
-            className={`${styles.gridRow} ${styles.gridRowTop} ${firstShapeRowClass}`}
-          >
-            {row1.map((id, index) => (
-              <Button
-                htmlType="button"
-                block
-                className={styles.gridCell}
-                key={`${id}-r1-${index}`}
-                onClick={() => setOrder((o) => shuffleOrder(o))}
-              >
-                <div className={styles.gridCard}>
-                  <div className={styles.gridCardBody}>
-                    <ShapeGraphic id={id} />
-                  </div>
-                </div>
-              </Button>
-            ))}
-          </div>
-          <div
-            className={`${styles.gridRow} ${styles.gridRowBottom} ${secondShapeRowClass}`}
-          >
-            {row2.map((id, index) => (
-              <Button
-                htmlType="button"
-                block
-                className={styles.gridCell}
-                key={`${id}-r2-${index}`}
-                onClick={() => setOrder((o) => shuffleOrder(o))}
-              >
-                <div className={styles.gridCard}>
-                  <div className={styles.gridCardBody}>
-                    <ShapeGraphic id={id} />
-                  </div>
-                </div>
-              </Button>
-            ))}
-          </div>
+          {shapeRows.map(({ ids, keyPrefix, leadingSpacer, className }) => (
+            <Row
+              key={keyPrefix}
+              gutter={[20, 20]}
+              wrap={false}
+              className={`${styles.gridRow} ${className ?? ""}`}
+            >
+              {leadingSpacer ? <Col span={6} /> : null}
+              {ids.map((id, index) => (
+                <Col span={6} key={`${id}-${keyPrefix}-${index}`}>
+                  <Button
+                    htmlType="button"
+                    block
+                    className={styles.gridCell}
+                    onClick={() => setOrder((o) => shuffleOrder(o))}
+                  >
+                    <div className={styles.gridCard}>
+                      <div className={styles.gridCardBody}>
+                        <ShapeGraphic id={id} />
+                      </div>
+                    </div>
+                  </Button>
+                </Col>
+              ))}
+              {!leadingSpacer ? <Col span={6} /> : null}
+            </Row>
+          ))}
         </div>
       </div>
     </div>
